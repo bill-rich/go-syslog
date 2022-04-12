@@ -1,4 +1,4 @@
-module gopkg.in/mcuadros/go-syslog
+module github.com/bill-rich/go-syslog
 
 go 1.18
 
