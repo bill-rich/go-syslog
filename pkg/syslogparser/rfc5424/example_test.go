@@ -3,7 +3,7 @@ package rfc5424_test
 import (
 	"fmt"
 
-	"github.com/bill-rich/go-syslog/internal/syslogparser/rfc5424"
+	"github.com/bill-rich/go-syslog/pkg/syslogparser/rfc5424"
 )
 
 func ExampleNewParser() {

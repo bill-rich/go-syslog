@@ -3,7 +3,7 @@ package rfc3164_test
 import (
 	"fmt"
 
-	"github.com/bill-rich/go-syslog/internal/syslogparser/rfc3164"
+	"github.com/bill-rich/go-syslog/pkg/syslogparser/rfc3164"
 )
 
 func ExampleNewParser() {
