@@ -36,19 +36,19 @@ type Parser struct {
 	buff           []byte
 	cursor         int
 	l              int
-	header         header
+	Header         Header
 	structuredData string
-	message        string
+	Message        string
 }
 
-type header struct {
-	priority  syslogparser.Priority
-	version   int
-	timestamp time.Time
-	hostname  string
-	appName   string
-	procId    string
-	msgId     string
+type Header struct {
+	Priority  syslogparser.Priority
+	Version   int
+	Timestamp time.Time
+	Hostname  string
+	AppName   string
+	ProcId    string
+	MsgId     string
 }
 
 type partialTime struct {
@@ -87,7 +87,7 @@ func (p *Parser) Parse() error {
 		return err
 	}
 
-	p.header = hdr
+	p.Header = hdr
 
 	sd, err := p.parseStructuredData()
 	if err != nil {
@@ -98,7 +98,7 @@ func (p *Parser) Parse() error {
 	p.cursor++
 
 	if p.cursor < p.l {
-		p.message = string(p.buff[p.cursor:])
+		p.Message = string(p.buff[p.cursor:])
 	}
 
 	return nil
@@ -106,36 +106,36 @@ func (p *Parser) Parse() error {
 
 func (p *Parser) Dump() syslogparser.LogParts {
 	return syslogparser.LogParts{
-		"priority":        p.header.priority.P,
-		"facility":        p.header.priority.F.Value,
-		"severity":        p.header.priority.S.Value,
-		"version":         p.header.version,
-		"timestamp":       p.header.timestamp,
-		"hostname":        p.header.hostname,
-		"app_name":        p.header.appName,
-		"proc_id":         p.header.procId,
-		"msg_id":          p.header.msgId,
+		"priority":        p.Header.Priority.P,
+		"facility":        p.Header.Priority.F.Value,
+		"severity":        p.Header.Priority.S.Value,
+		"version":         p.Header.Version,
+		"timestamp":       p.Header.Timestamp,
+		"hostname":        p.Header.Hostname,
+		"app_name":        p.Header.AppName,
+		"proc_id":         p.Header.ProcId,
+		"msg_id":          p.Header.MsgId,
 		"structured_data": p.structuredData,
-		"message":         p.message,
+		"message":         p.Message,
 	}
 }
 
 // HEADER = PRI VERSION SP TIMESTAMP SP HOSTNAME SP APP-NAME SP PROCID SP MSGID
-func (p *Parser) parseHeader() (header, error) {
-	hdr := header{}
+func (p *Parser) parseHeader() (Header, error) {
+	hdr := Header{}
 
 	pri, err := p.parsePriority()
 	if err != nil {
 		return hdr, err
 	}
 
-	hdr.priority = pri
+	hdr.Priority = pri
 
 	ver, err := p.parseVersion()
 	if err != nil {
 		return hdr, err
 	}
-	hdr.version = ver
+	hdr.Version = ver
 	p.cursor++
 
 	ts, err := p.parseTimestamp()
@@ -143,7 +143,7 @@ func (p *Parser) parseHeader() (header, error) {
 		return hdr, err
 	}
 
-	hdr.timestamp = ts
+	hdr.Timestamp = ts
 	p.cursor++
 
 	host, err := p.parseHostname()
@@ -151,7 +151,7 @@ func (p *Parser) parseHeader() (header, error) {
 		return hdr, err
 	}
 
-	hdr.hostname = host
+	hdr.Hostname = host
 	p.cursor++
 
 	appName, err := p.parseAppName()
@@ -159,7 +159,7 @@ func (p *Parser) parseHeader() (header, error) {
 		return hdr, err
 	}
 
-	hdr.appName = appName
+	hdr.AppName = appName
 	p.cursor++
 
 	procId, err := p.parseProcId()
@@ -167,7 +167,7 @@ func (p *Parser) parseHeader() (header, error) {
 		return hdr, nil
 	}
 
-	hdr.procId = procId
+	hdr.ProcId = procId
 	p.cursor++
 
 	msgId, err := p.parseMsgId()
@@ -175,7 +175,7 @@ func (p *Parser) parseHeader() (header, error) {
 		return hdr, nil
 	}
 
-	hdr.msgId = msgId
+	hdr.MsgId = msgId
 	p.cursor++
 
 	return hdr, nil

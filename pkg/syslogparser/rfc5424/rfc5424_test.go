@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	. "gopkg.in/check.v1"
 	"github.com/bill-rich/go-syslog/pkg/syslogparser"
+	. "gopkg.in/check.v1"
 )
 
 // Hooks up gocheck into the gotest runner.
@@ -176,66 +176,66 @@ func (s *Rfc5424TestSuite) TestParseHeader_Valid(c *C) {
 		S: syslogparser.Severity{Value: 5},
 	}
 
-	expected := []header{
+	expected := []Header{
 		// HEADER complete
-		header{
-			priority:  pri,
-			version:   1,
-			timestamp: ts,
-			hostname:  hostname,
-			appName:   appName,
-			procId:    procId,
-			msgId:     msgId,
+		Header{
+			Priority:  pri,
+			Version:   1,
+			Timestamp: ts,
+			Hostname:  hostname,
+			AppName:   appName,
+			ProcId:    procId,
+			MsgId:     msgId,
 		},
 		// TIMESTAMP as NILVALUE
-		header{
-			priority:  pri,
-			version:   1,
-			timestamp: *new(time.Time),
-			hostname:  hostname,
-			appName:   appName,
-			procId:    procId,
-			msgId:     msgId,
+		Header{
+			Priority:  pri,
+			Version:   1,
+			Timestamp: *new(time.Time),
+			Hostname:  hostname,
+			AppName:   appName,
+			ProcId:    procId,
+			MsgId:     msgId,
 		},
 		// HOSTNAME as NILVALUE
-		header{
-			priority:  pri,
-			version:   1,
-			timestamp: ts,
-			hostname:  nilValue,
-			appName:   appName,
-			procId:    procId,
-			msgId:     msgId,
+		Header{
+			Priority:  pri,
+			Version:   1,
+			Timestamp: ts,
+			Hostname:  nilValue,
+			AppName:   appName,
+			ProcId:    procId,
+			MsgId:     msgId,
 		},
 		// APP-NAME as NILVALUE
-		header{
-			priority:  pri,
-			version:   1,
-			timestamp: ts,
-			hostname:  hostname,
-			appName:   nilValue,
-			procId:    procId,
-			msgId:     msgId,
+		Header{
+			Priority:  pri,
+			Version:   1,
+			Timestamp: ts,
+			Hostname:  hostname,
+			AppName:   nilValue,
+			ProcId:    procId,
+			MsgId:     msgId,
 		},
 		// PROCID as NILVALUE
-		header{
-			priority:  pri,
-			version:   1,
-			timestamp: ts,
-			hostname:  hostname,
-			appName:   appName,
-			procId:    nilValue,
-			msgId:     msgId,
+		Header{
+			Priority:  pri,
+			Version:   1,
+			Timestamp: ts,
+			Hostname:  hostname,
+			AppName:   appName,
+			ProcId:    nilValue,
+			MsgId:     msgId,
 		},
 		// MSGID as NILVALUE
-		header{
-			priority:  pri,
-			version:   1,
-			timestamp: ts,
-			hostname:  hostname,
-			appName:   appName,
-			procId:    procId,
-			msgId:     nilValue,
+		Header{
+			Priority:  pri,
+			Version:   1,
+			Timestamp: ts,
+			Hostname:  hostname,
+			AppName:   appName,
+			ProcId:    procId,
+			MsgId:     nilValue,
 		},
 	}
 
